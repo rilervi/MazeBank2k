@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>🏦 Рахунки</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>💼 Рахунки</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="accounts.html">Рахунки</a>
+      <a href="cards.html">Картки</a>
+      <a href="payment.html">Платежі</a>
+      <a href="loan.html">Кредити</a>
+      <a href="templates.html">Шаблони</a>
+      <a href="settings.html">Налаштування</a>
+      <a href="login.html">Вихід</a>
+    </nav>
+  </header>
+
+  <main class="fade-in">
+    <h2>📋 Ваші рахунки</h2>
+    <table class="account-table">
+      <thead>
+        <tr>
+          <th>Тип</th>
+          <th>IBAN</th>
+          <th>Банк</th>
+          <th>Статус</th>
+          <th>Баланс</th>
+        </tr>
+      </thead>
+      <tbody id="accountList"></tbody>
+    </table>
+
+    <h3>➕ Створити рахунок</h3>
+    <form id="createAccountForm">
+      <label>Тип рахунку:
+        <select id="accountType">
+          <option value="Основний">Основний</option>
+          <option value="Депозит">Депозит</option>
+        </select>
+      </label>
+      <label>Початковий баланс:
+        <input type="number" id="initialAmount" min="0" step="0.01">
+      </label>
+      <button type="submit" class="action-btn">Створити</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      showAccounts();
+      var form = document.getElementById("createAccountForm");
+      if (form) form.addEventListener("submit", createAccount);
+    });
+  </script>
+</body>
+</html>

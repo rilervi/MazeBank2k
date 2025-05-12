@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maze Bank — Платежі</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>💸 Створити платіж</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="accounts.html">Рахунки</a>
+      <a href="cards.html">Картки</a>
+      <a href="loan.html">Кредити</a>
+      <a href="templates.html">Шаблони</a>
+      <a href="settings.html">Налаштування</a>
+      <a href="login.html">Вихід</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="paymentForm">
+      <label>Картка для списання:
+        <select id="fromCard"></select>
+      </label>
+
+      <label>Номер картки одержувача:
+        <input type="text" id="receiver" maxlength="19" oninput="formatCardNumber(this)" placeholder="0000 0000 0000 0000" required />
+      </label>
+
+      <label>Сума:
+        <input type="number" id="amount" required />
+      </label>
+
+      <label>Призначення:
+        <input type="text" id="purpose" />
+      </label>
+
+      <button type="submit">Виконати платіж</button>
+    </form>
+
+    <section>
+      <h3>🧾 Останні платежі</h3>
+      <ul id="paymentHistory"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

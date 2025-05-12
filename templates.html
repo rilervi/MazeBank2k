@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>📋 Шаблони</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>📋 Шаблони</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="accounts.html">Рахунки</a>
+      <a href="cards.html">Картки</a>
+      <a href="payment.html">Платежі</a>
+      <a href="loan.html">Кредити</a>
+      <a href="templates.html">Шаблони</a>
+      <a href="settings.html">Налаштування</a>
+      <a href="login.html">Вихід</a>
+    </nav>
+  </header>
+
+  <main class="fade-in">
+    <h2>Збережені шаблони</h2>
+    <ul id="templateList"></ul>
+
+    <h3>➕ Додати шаблон</h3>
+    <form id="templateForm">
+      <label>Номер картки:
+        <input type="text" id="templateReceiver" required>
+      </label>
+      <label>Сума:
+        <input type="number" id="templateAmount" required>
+      </label>
+      <label>Призначення:
+        <input type="text" id="templatePurpose" required>
+      </label>
+      <button type="submit" class="action-btn">Зберегти</button>
+    </form>
+  </main>
+
+  <script>
+    function showTemplates() {
+      const list = document.getElementById("templateList");
+      const templates = JSON.parse(localStorage.getItem("templates") || "[]");
+      list.innerHTML = "";
+      templates.forEach(function (t, i) {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${t.to}</strong> — ${t.amount} грн (${t.purpose}) 
+          <button class="ghost" onclick="deleteTemplate(${i})">🗑</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    function deleteTemplate(index) {
+      const templates = JSON.parse(localStorage.getItem("templates") || "[]");
+      templates.splice(index, 1);
+      localStorage.setItem("templates", JSON.stringify(templates));
+      showTemplates();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      showTemplates();
+      document.getElementById("templateForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const newTemplate = {
+          to: document.getElementById("templateReceiver").value,
+          amount: document.getElementById("templateAmount").value,
+          purpose: document.getElementById("templatePurpose").value
+        };
+        const templates = JSON.parse(localStorage.getItem("templates") || "[]");
+        templates.push(newTemplate);
+        localStorage.setItem("templates", JSON.stringify(templates));
+        showTemplates();
+        e.target.reset();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>🔐 Вхід</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="fade-in center-form">
+    <h2>🔐 Вхід до кабінету</h2>
+    <form id="loginForm">
+      <label>Email:
+        <input type="email" id="loginEmail" required>
+      </label>
+      <label>Пароль:
+        <input type="password" id="loginPassword" required>
+      </label>
+      <button type="submit" class="btn">Увійти</button>
+      <p>Ще не маєте акаунту? <a href="register.html">Зареєструйтесь</a></p>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+      if (email === storedUser.email && password === storedUser.password) {
+        alert("✅ Вхід успішний!");
+        window.location.href = "index.html";
+      } else {
+        alert("❌ Неправильний логін або пароль.");
+      }
+    });
+  </script>
+</body>
+</html>

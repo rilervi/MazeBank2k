@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>📄 Кредити</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>📄 Кредити</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="accounts.html">Рахунки</a>
+      <a href="cards.html">Картки</a>
+      <a href="payment.html">Платежі</a>
+      <a href="loan.html">Кредити</a>
+      <a href="templates.html">Шаблони</a>
+      <a href="settings.html">Налаштування</a>
+      <a href="login.html">Вихід</a>
+    </nav>
+  </header>
+
+  <main class="fade-in">
+    <h2>🧾 Мої кредити</h2>
+    <table class="account-table">
+      <thead>
+        <tr>
+          <th>Сума</th>
+          <th>Термін (міс.)</th>
+          <th>Ставка</th>
+          <th>До повернення</th>
+          <th>Дата</th>
+        </tr>
+      </thead>
+      <tbody id="loanList"></tbody>
+    </table>
+
+    <h3>➕ Оформити новий кредит</h3>
+    <form id="loanForm">
+      <label>Сума:
+        <input type="number" id="loanAmount" required>
+      </label>
+      <label>Термін (міс.):
+        <input type="number" id="loanTerm" required>
+      </label>
+      <button type="submit" class="action-btn">Оформити</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const table = document.getElementById("loanList");
+      const loans = JSON.parse(localStorage.getItem("loans") || "[]");
+      loans.forEach(function (l) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${l.amount} грн</td><td>${l.term}</td><td>35%</td><td>${l.total} грн</td><td>${l.date}</td>`;
+        table.appendChild(tr);
+      });
+
+      const form = document.getElementById("loanForm");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const amount = parseFloat(document.getElementById("loanAmount").value);
+        const term = parseInt(document.getElementById("loanTerm").value);
+        const total = (amount + amount * 0.35).toFixed(2);
+        const date = new Date().toLocaleDateString("uk-UA");
+
+        loans.push({ amount, term, total, date });
+        localStorage.setItem("loans", JSON.stringify(loans));
+
+        // Поповнення на рахунок
+        const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+        if (accounts.length > 0) {
+          accounts[0].balance += amount;
+          localStorage.setItem("accounts", JSON.stringify(accounts));
+        }
+
+        location.reload();
+      });
+    });
+  </script>
+</body>
+</html>

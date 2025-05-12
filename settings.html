@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>⚙️ Налаштування</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⚙️ Налаштування</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="accounts.html">Рахунки</a>
+      <a href="cards.html">Картки</a>
+      <a href="payment.html">Платежі</a>
+      <a href="loan.html">Кредити</a>
+      <a href="templates.html">Шаблони</a>
+      <a href="settings.html">Налаштування</a>
+      <a href="login.html">Вихід</a>
+    </nav>
+  </header>
+
+  <main class="fade-in">
+    <h2>🔐 Профіль</h2>
+    <form id="settingsForm">
+      <label>ПІБ:
+        <input type="text" id="fullName">
+      </label>
+      <label>Телефон:
+        <input type="tel" id="phone">
+      </label>
+      <label>Email:
+        <input type="email" id="email">
+      </label>
+      <label>Новий пароль:
+        <input type="password" id="password">
+      </label>
+      <button type="submit" class="action-btn">💾 Зберегти зміни</button>
+    </form>
+  </main>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    document.getElementById("fullName").value = user.fullName || "";
+    document.getElementById("phone").value = user.phone || "";
+    document.getElementById("email").value = user.email || "";
+
+    document.getElementById("settingsForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      user.fullName = document.getElementById("fullName").value;
+      user.phone = document.getElementById("phone").value;
+      user.email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      if (password) user.password = password;
+      localStorage.setItem("user", JSON.stringify(user));
+      alert("✅ Дані оновлено!");
+    });
+  </script>
+</body>
+</html>
